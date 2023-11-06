@@ -27,15 +27,15 @@ function fillWrapp() {
     let HTML = ``
     data.forEach(item => {
         HTML += 
-        `<div class="col-md-6 col-lg-6 col-xl-4 mb-3">
+        `<div class="col-md-6 col-lg-6 col-xl-4 mb-3 card-none">
             <div class="card item-card" data-id='${item.id}'>
                 <div class="card-body">
-                    <h3 class="mb-1">${item.name}</h3>
+                    <h3 class="mb-1 item-card__name">${item.name}</h3>
                     <div class="mb-1">
                         <i class="ri-phone-line me-2"></i>
                         <a href="tel:${item.tel}">${item.tel}</a>
                     </div>
-                    <p class="mb-2"><i class="ri-map-pin-line me-1"></i>${item.address}</p>
+                    <p class="mb-2"><i class="ri-map-pin-line me-1"></i><span class="item-card__address">${item.address}</span></p>
                     <p><i class="ri-chat-2-line me-1"></i> Комментарии:</p>
                     <p> ${item.comments}</p>
                 </div>
@@ -65,6 +65,21 @@ document.querySelector('.btn-save').addEventListener('click', ()=> {
     window.localStorage.setItem('data', JSON.stringify(data));
     // closeModal('#exampleModal');
 });
+
+
+document.getElementById('search-input').addEventListener('input', (event) => {
+    const wrapp = document.querySelector('.item-wrap')
+    let value = event.target.value.toUpperCase()
+    wrapp.querySelectorAll('.card-none').forEach(el => {
+        if (el.querySelector('.item-card__name').textContent.toUpperCase().includes(value) || el.querySelector('.item-card__address').textContent.toUpperCase().includes(value) ) {
+            el.classList.remove('d-none'); 
+        } else {
+            el.classList.add('d-none'); 
+        }
+    });
+
+});
+
 
 function fillModal(data) {
     let HTML = 
